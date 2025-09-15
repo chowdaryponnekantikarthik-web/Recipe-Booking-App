@@ -1,0 +1,828 @@
+import React, { useState } from "react";
+
+const Container = {
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "#ffeae1",
+};
+
+const Box = {
+  background: "white",
+  padding: "30px",
+  borderRadius: "16px",
+  boxShadow: "0 6px 16px rgba(0,0,0,0.15)",
+  width: "300px",
+  textAlign: "center",
+};
+
+const Title = {
+  marginBottom: "20px",
+  color: "#ff6b4d",
+};
+
+const Input = {
+  width: "100%",
+  padding: "10px",
+  margin: "8px 0",
+  border: "1px solid #ccc",
+  borderRadius: "8px",
+};
+
+const Button = {
+  width: "100%",
+  padding: "10px",
+  background: "#ff6b4d",
+  border: "none",
+  color: "white",
+  borderRadius: "8px",
+  marginTop: "10px",
+  cursor: "pointer",
+};
+
+const ToggleLink = {
+  marginTop: "10px",
+  cursor: "pointer",
+  color: "#ff6b4d",
+  fontSize: "0.9em",
+};
+
+const HeaderWrapper = {
+  background: "#ff6b4d",
+  color: "white",
+  padding: "20px 30px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "10px",
+};
+
+const HeaderTitle = {
+  margin: 0,
+  fontSize: "1.8rem",
+  flexShrink: 0,
+};
+
+const SearchContainer = {
+  flexGrow: 1,
+  minWidth: "200px",
+};
+
+const SearchInput = {
+  width: "100%",
+  padding: "10px",
+  borderRadius: "30px",
+  border: "none",
+  fontSize: "1em",
+};
+
+const Nav = {
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  flexWrap: "wrap",
+  marginLeft: "auto",
+};
+
+const NavButton = (active) => ({
+  background: active ? "#e45736" : "white",
+  color: active ? "white" : "#ff6b4d",
+  border: "none",
+  padding: "8px 18px",
+  fontWeight: "700",
+  borderRadius: "30px",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+  fontSize: "1em",
+});
+
+const Card = {
+  background: "white",
+  borderRadius: "16px",
+  overflow: "hidden",
+  boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+  transition: "0.3s",
+  cursor: "pointer",
+  marginBottom: "20px",
+};
+
+const Image = {
+  width: "100%",
+  height: "200px",
+  objectFit: "cover",
+};
+
+const Content = {
+  padding: "18px",
+};
+
+const CardTitle = {
+  color: "#ff6b4d",
+  fontWeight: "700",
+  marginBottom: "6px",
+};
+
+const BookButton = {
+  marginTop: "10px",
+  background: "#ff6b4d",
+  color: "white",
+  border: "none",
+  padding: "10px 16px",
+  borderRadius: "30px",
+  cursor: "pointer",
+  fontSize: "1em",
+};
+
+const Main = {
+  maxWidth: "1200px",
+  margin: "40px auto",
+  padding: "0 20px",
+};
+
+const ModalBg = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.4)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 1000,
+};
+
+const ModalContent = {
+  background: "white",
+  padding: "30px",
+  borderRadius: "16px",
+  maxWidth: "400px",
+  textAlign: "center",
+  boxShadow: "0 6px 16px rgba(0,0,0,0.2)",
+};
+
+const ModalButton = {
+  marginTop: "15px",
+  padding: "10px 20px",
+  background: "#ff6b4d",
+  color: "white",
+  border: "none",
+  borderRadius: "30px",
+  cursor: "pointer",
+  fontSize: "1em",
+};
+
+const Section = (visible) => ({
+  background: "#ffeae1",
+  marginTop: "40px",
+  padding: "20px",
+  borderRadius: "16px",
+  boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+  display: visible ? "block" : "none",
+});
+
+const FavTitle = {
+  marginTop: 0,
+  color: "#ff6b4d",
+};
+
+const List = {
+  listStyle: "none",
+  paddingLeft: 0,
+  marginTop: "15px",
+};
+
+const ListItem = {
+  background: "white",
+  padding: "12px 18px",
+  marginBottom: "12px",
+  borderRadius: "12px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  boxShadow: "0 3px 8px rgba(0,0,0,0.07)",
+};
+
+const RemoveButton = {
+  background: "#e45736",
+  border: "none",
+  color: "white",
+  padding: "6px 12px",
+  borderRadius: "20px",
+  cursor: "pointer",
+  fontSize: "0.9em",
+};
+
+const Auth = ({ onLogin }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Simple auth simulation
+    if (!email || !pass || (!isLogin && pass !== confirmPass)) {
+      alert("Please fill the form correctly.");
+      return;
+    }
+    onLogin(true);
+  };
+
+  return (
+    <div style={Container}>
+      <form style={Box} onSubmit={handleSubmit}>
+        <h2 style={Title}>{isLogin ? "Login" : "Sign Up"}</h2>
+        <input
+          style={Input}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          style={Input}
+          type="password"
+          placeholder="Password"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          required
+        />
+        {!isLogin && (
+          <input
+            style={Input}
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPass}
+            onChange={(e) => setConfirmPass(e.target.value)}
+            required
+          />
+        )}
+        <button type="submit" style={Button}>
+          {isLogin ? "Login" : "Register"}
+        </button>
+        <div
+          style={ToggleLink}
+          onClick={() => setIsLogin(!isLogin)}
+          role="button"
+          tabIndex={0}
+          onKeyPress={() => setIsLogin(!isLogin)}
+        >
+          {isLogin ? "Create an account" : "Have an account? Login"}
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const Header = ({
+  searchTerm,
+  setSearchTerm,
+  categories,
+  activeCategory,
+  setActiveCategory,
+}) => {
+  return (
+    <header style={HeaderWrapper}>
+      <h1 style={HeaderTitle}>Recipe Book</h1>
+      <div style={SearchContainer}>
+        <input
+          type="search"
+          placeholder="Search recipes..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={SearchInput}
+        />
+      </div>
+      <nav style={Nav}>
+        {categories.map((category) => (
+          <button
+            key={category}
+            style={NavButton(activeCategory === category)}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </nav>
+    </header>
+  );
+};
+
+const RecipeCard = ({ recipe, onBook }) => {
+  return (
+    <div
+      style={{
+        ...Card,
+        boxShadow: "0 6px 16px rgba(0, 0, 0, 0.08)",
+      }}
+    >
+      <img src={recipe.image} alt={recipe.title} style={Image} />
+      <div style={Content}>
+        <h3 style={CardTitle}>{recipe.title}</h3>
+        <button style={BookButton} onClick={() => onBook(recipe)}>
+          Book
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const RecipeGrid = ({ recipes, onBook }) => {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+        gap: "30px",
+      }}
+    >
+      {recipes.map((recipe) => (
+        <RecipeCard key={recipe.id} recipe={recipe} onBook={onBook} />
+      ))}
+    </div>
+  );
+};
+
+const Modal = ({ active, onClose, children }) => {
+  if (!active) return null;
+
+  return (
+    <div style={ModalBg} onClick={onClose}>
+      <div style={ModalContent} onClick={(e) => e.stopPropagation()}>
+        {children}
+        <button style={ModalButton} onClick={onClose}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const Favorites = ({ favorites, onRemove }) => {
+  return (
+    <section style={Section(favorites.length > 0)}>
+      <h2 style={FavTitle}>Your Favorites</h2>
+      <ul style={List}>
+        {favorites.map((fav) => (
+          <li key={fav.id} style={ListItem}>
+            {fav.title}
+            <button style={RemoveButton} onClick={() => onRemove(fav.id)}>
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+const App = () => {
+  const categories = ["All", "Appetizers", "Main Courses", "Desserts"];
+
+  const sampleRecipes = [
+    {
+      id: 1,
+      title: "Avocado Toast",
+      image:
+        "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 2,
+      title: "Spaghetti Carbonara",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 3,
+      title: "Chocolate Cake",
+      image:
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    // Added 47 more recipes below, total 50
+    {
+      id: 4,
+      title: "Bruschetta",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/1/1f/2014_Bruschetta_The_Larder_Chiang_Mai.jpg",
+      category: "Appetizers",
+    },
+    {
+      id: 5,
+      title: "Caesar Salad",
+      image:
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 6,
+      title: "Chicken Alfredo",
+      image:
+        "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 7,
+      title: "Beef Stroganoff",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 8,
+      title: "Grilled Salmon",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 9,
+      title: "Cheesecake",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Baked_cheesecake_with_raspberries_and_blueberries.jpg/1200px-Baked_cheesecake_with_raspberries_and_blueberries.jpg",
+      category: "Desserts",
+    },
+    {
+      id: 10,
+      title: "Apple Pie",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShGvV_1zfnQCiMnjXk7by4zrlZKJQw1yvBIg&s",
+      category: "Desserts",
+    },
+    {
+      id: 11,
+      title: "Stuffed Mushrooms",
+      image:
+        "https://natashaskitchen.com/wp-content/uploads/2023/12/stuffed-mushrooms-sq.jpg",
+      category: "Appetizers",
+    },
+    {
+      id: 12,
+      title: "Shrimp Cocktail",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 13,
+      title: "Ratatouille",
+      image:
+        "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2004/4/21/0/bw2b09_shrimp_cocktail.jpg.rend.hgtvcom.1280.1280.suffix/1557928675507.webp",
+      category: "Main Courses",
+    },
+    {
+      id: 14,
+      title: "Roast Chicken",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 15,
+      title: "Tiramisu",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 16,
+      title: "Panna Cotta",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 17,
+      title: "Garlic Bread",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 18,
+      title: "Caprese Salad",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 19,
+      title: "Lamb Chops",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 20,
+      title: "Fish Tacos",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 21,
+      title: "Creme Brulee",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 22,
+      title: "Brownies",
+      image:
+        "https://images.unsplash.com/photo-1558021212-51b6a40a58b4?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 23,
+      title: "Deviled Eggs",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 24,
+      title: "Onion Rings",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 25,
+      title: "Beef Wellington",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 26,
+      title: "Chicken Curry",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 27,
+      title: "Pavlova",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 28,
+      title: "Cupcakes",
+      image:
+        "https://images.unsplash.com/photo-1558021212-51b6a40a58b4?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 29,
+      title: "Spring Rolls",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 30,
+      title: "Potato Skins",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 31,
+      title: "Grilled Steak",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 32,
+      title: "Vegetable Stir Fry",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 33,
+      title: "Lemon Tart",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 34,
+      title: "Eclairs",
+      image:
+        "https://images.unsplash.com/photo-1558021212-51b6a40a58b4?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 35,
+      title: "Nachos",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 36,
+      title: "Garlic Wings",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 37,
+      title: "Lasagna",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 38,
+      title: "Pulled Pork",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 39,
+      title: "Banoffee Pie",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 40,
+      title: "Macarons",
+      image:
+        "https://images.unsplash.com/photo-1558021212-51b6a40a58b4?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 41,
+      title: "Quesadillas",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 42,
+      title: "Fried Calamari",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 43,
+      title: "Shepherd's Pie",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 44,
+      title: "Beef Tacos",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 45,
+      title: "Pav Bhaji",
+      image:
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 46,
+      title: "Chocolate Mousse",
+      image:
+        "https://images.unsplash.com/photo-1558021212-51b6a40a58b4?auto=format&fit=crop&w=800&q=80",
+      category: "Desserts",
+    },
+    {
+      id: 47,
+      title: "Mozzarella Sticks",
+      image:
+        "https://images.unsplash.com/photo-1562967916-eb82221dfb44?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 48,
+      title: "Buffalo Wings",
+      image:
+        "https://images.unsplash.com/photo-1552332386-f8dd00dc0ff3?auto=format&fit=crop&w=800&q=80",
+      category: "Appetizers",
+    },
+    {
+      id: 49,
+      title: "Eggplant Parmesan",
+      image:
+        "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+    {
+      id: 50,
+      title: "Chicken Parmesan",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+      category: "Main Courses",
+    },
+  ];
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [favorites, setFavorites] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+  const [modalRecipe, setModalRecipe] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const filteredRecipes = sampleRecipes.filter((recipe) => {
+    const matchesCategory =
+      activeCategory === "All" || recipe.category === activeCategory;
+    const matchesSearch = recipe.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleBook = (recipe) => {
+    setModalRecipe(recipe);
+    setModalActive(true);
+  };
+
+  const handleAddFavorite = () => {
+    if (favorites.find((fav) => fav.id === modalRecipe.id)) {
+      alert("Recipe already in favorites.");
+      return;
+    }
+    setFavorites((prev) => [...prev, modalRecipe]);
+    setModalActive(false);
+  };
+
+  const handleRemoveFavorite = (id) => {
+    setFavorites((prev) => prev.filter((fav) => fav.id !== id));
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    setFavorites([]);
+  };
+
+  if (!loggedIn) {
+    return <Auth onLogin={setLoggedIn} />;
+  }
+
+  return (
+    <>
+      <Header
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        categories={categories}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+      />
+      <main style={Main}>
+        <h2 style={{ color: "#ff6b4d", marginBottom: "20px" }}>
+          Filtered Recipes
+        </h2>
+        <RecipeGrid recipes={filteredRecipes} onBook={handleBook} />
+
+        <section style={{ marginTop: "60px" }}>
+          <h2 style={{ color: "#ff6b4d", marginBottom: "20px" }}>All Recipes</h2>
+          <RecipeGrid recipes={sampleRecipes} onBook={handleBook} />
+        </section>
+
+        <Favorites favorites={favorites} onRemove={handleRemoveFavorite} />
+
+        <Modal active={modalActive} onClose={() => setModalActive(false)}>
+          <h3>Book Recipe</h3>
+          <p>Do you want to add "{modalRecipe?.title}" to your favorites?</p>
+          <button style={ModalButton} onClick={handleAddFavorite}>
+            Yes, add to favorites
+          </button>
+        </Modal>
+
+        <button
+          onClick={handleLogout}
+          style={{
+            ...Button,
+            marginTop: "40px",
+            maxWidth: "200px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            display: "block",
+          }}
+        >
+          Logout
+        </button>
+      </main>
+    </>
+  );
+};
+
+export default App;
